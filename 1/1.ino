@@ -1,4 +1,4 @@
-//Programa: Arduino e DHT11 controle de rele por temperatura
+ //Programa: Arduino e DHT11 controle de rele por temperatura
 //Autor: Arduino e Cia
 
 #include "U8glib.h"
@@ -7,10 +7,10 @@
 U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
 
 int posicao = 0;
-int temp_max = 20;
+int temp_max = 19;
 
 #define pino_aumenta 5
-#define pino_diminui 4
+#define  pino_diminui 4
 #define pino_rele 7
 #define pino_DHT A0
 #define DHTTYPE DHT11
@@ -74,8 +74,8 @@ void setup(void)
 {
   Serial.begin(9600);
   pinMode(pino_rele, OUTPUT);
-  pinMode(pino_aumenta, INPUT);
-  pinMode(pino_diminui, INPUT);
+  pinMode(pino_aumenta, INPUT_PULLUP);
+  pinMode(pino_diminui, INPUT_PULLUP);
   dht.begin();
 }
 
@@ -91,16 +91,16 @@ void loop(void)
 
   //Testa botao aumenta temperatura
   aumenta = digitalRead(pino_aumenta);
-  if (aumenta == 1)
+  if (aumenta == 0)
   {temp_max++;}
-  while (digitalRead(pino_aumenta) == 1)
+  while (digitalRead(pino_aumenta) == 0)
   {delay(10);}
 
   //testa botao diminui temperatura
   diminui = digitalRead(pino_diminui);
-  if (diminui == 1)
+  if (diminui == 0)
   {temp_max--;}
-  while (digitalRead(pino_diminui) == 1)
+  while (digitalRead(pino_diminui) == 0)
   {delay(10);}
 
   u8g.firstPage();
